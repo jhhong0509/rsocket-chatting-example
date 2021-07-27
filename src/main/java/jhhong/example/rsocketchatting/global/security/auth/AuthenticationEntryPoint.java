@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
     @Override
-    public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException ex) {
+    public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException ex) {        // 인증 중 예외가 발생했을 때 처리
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
 

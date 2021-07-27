@@ -4,8 +4,8 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 public class AuthenticationToken extends AbstractAuthenticationToken {
 
-    private final String email;
-    private final String token;
+    private final String email;                         // principal = id
+    private final String token;                         // credentials = password
 
     public AuthenticationToken(String email, String token) {
         super(null);
@@ -16,11 +16,11 @@ public class AuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return email;
+        return token;
     }
 
     @Override
     public Object getPrincipal() {
-        return token;
+        return email;
     }
 }

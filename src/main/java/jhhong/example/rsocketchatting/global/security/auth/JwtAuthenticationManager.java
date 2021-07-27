@@ -15,7 +15,7 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
     private final UserRepository userRepository;
 
     @Override
-    public Mono<Authentication> authenticate(Authentication authentication) {
+    public Mono<Authentication> authenticate(Authentication authentication) {   // 해당 인증 객체가 실제로 유효한지 판단
         return Mono.just(authentication)
                 .map(Authentication::getName)
                 .flatMap(userRepository::findById)

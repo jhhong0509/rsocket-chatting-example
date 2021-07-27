@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
 @Component
-public class AuthenticationConverter implements ServerAuthenticationConverter {
+public class AuthenticationConverter implements ServerAuthenticationConverter {     // 요청을 Authentication 객체로 변환하는 역할
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -23,13 +23,13 @@ public class AuthenticationConverter implements ServerAuthenticationConverter {
                 .flatMap(this::getAuthentication);
     }
 
-    private Mono<String> extractToken(ServerWebExchange exchange) {
+    private Mono<String> extractToken(ServerWebExchange exchange) {     // 토큰 부분을 추출
         return Mono.justOrEmpty(exchange.getRequest().getHeaders()
                 .getFirst(HttpHeaders.AUTHORIZATION))
                 .map(s -> s.substring(7));
     }
 
-    private Mono<AuthenticationToken> getAuthentication(String token) {
+    private Mono<AuthenticationToken> getAuthentication(String token) {     // token 으로 Authentication 객체 생성
         return jwtTokenProvider.parseToken(token)
                 .filter(claims -> claims.get("type")
                         .equals(TokenType.ACCESS_TOKEN.getType()))
