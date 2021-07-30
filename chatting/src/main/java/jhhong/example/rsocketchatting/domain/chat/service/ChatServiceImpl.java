@@ -2,9 +2,6 @@ package jhhong.example.rsocketchatting.domain.chat.service;
 
 import jhhong.example.rsocketchatting.domain.chat.entity.Chat;
 import jhhong.example.rsocketchatting.domain.chat.entity.ChatRepository;
-import jhhong.example.rsocketchatting.domain.user.entity.UserRepository;
-import jhhong.example.rsocketchatting.global.security.auth.AuthenticationExportManager;
-import jhhong.example.rsocketchatting.global.security.jwt.exception.InvalidTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -15,8 +12,6 @@ import reactor.core.publisher.Mono;
 public class ChatServiceImpl implements ChatService {
 
     private final ChatRepository chatRepository;
-    private final UserRepository userRepository;
-    private final AuthenticationExportManager authenticationManager;
 
     @Override
     public Mono<Void> sendMessage(String message) {
