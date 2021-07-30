@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4576624f-fc0d-4801-a8bf-a9a3664768b9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/RsocketChattingApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/chat/entity/Chat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/chat/entity/ChatRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/chat/entity/Message.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/chat/exception/ChatRoomNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/chat/router/ChatController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/chat/service/ChatService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/chat/service/ChatServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/user/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/domain/user/entity/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/error/CustomErrorAttributes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/error/ErrorCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/error/GlobalException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/error/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/auth/AuthenticationEntryPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/auth/AuthenticationExportManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/auth/AuthenticationToken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/auth/JwtAuthenticationManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/config/AuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/jwt/AuthenticationConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/jwt/JwtTokenProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/jwt/TokenType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/jwt/exception/InvalidAuthenticationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/security/jwt/exception/InvalidTokenException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/validation/BadRequestException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jhhong/example/rsocketchatting/global/validation/CustomValidation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/jhhong/example/rsocketchatting/RsocketChattingApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1w2quHiKxHjKGMx58Q3AS651V2o" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/chatting" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4576624f-fc0d-4801-a8bf-a9a3664768b9" name="Default Changelist" comment="" />
+      <created>1627667255943</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1627667255943</updated>
+      <workItem from="1627667259384" duration="39000" />
+    </task>
+    <servers />
+  </component>
+</project>
