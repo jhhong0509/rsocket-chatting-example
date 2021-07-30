@@ -1,4 +1,4 @@
-package jhhong.example.user.domain.user.exceptions;
+package jhhong.example.user.domain.auth.exceptions;
 
 import jhhong.example.user.global.error.ErrorCode;
 import jhhong.example.user.global.error.GlobalException;

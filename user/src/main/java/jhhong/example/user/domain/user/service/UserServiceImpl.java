@@ -3,7 +3,6 @@ package jhhong.example.user.domain.user.service;
 import jhhong.example.user.domain.user.entity.User;
 import jhhong.example.user.domain.user.entity.UserRepository;
 import jhhong.example.user.domain.user.exceptions.UserAlreadyExistException;
-import jhhong.example.user.domain.user.exceptions.UserNotFoundException;
 import jhhong.example.user.domain.user.payload.CreateUserRequest;
 import jhhong.example.user.domain.user.payload.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
