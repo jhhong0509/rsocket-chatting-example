@@ -1,12 +1,2 @@
 jwt:
   secret: sdfadf
-spring:
-  data:
-    mongodb:
-      password: hong
-      username: hong
-      authentication-database: admin
-      auto-index-creation: true
-      database: chattest
-      host: 211.38.86.92
-      port: 27017
