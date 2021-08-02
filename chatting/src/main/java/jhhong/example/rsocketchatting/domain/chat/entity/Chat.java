@@ -3,24 +3,31 @@ package jhhong.example.rsocketchatting.domain.chat.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Document
 public class Chat {
 
     @MongoId
-    private final String id;
+    private String id;
 
-    private final String message;
+    private String message;
 
-    private final String senderEmail;
+    private String senderEmail;
 
-    private final String senderName;
+    private String senderName;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 
 }

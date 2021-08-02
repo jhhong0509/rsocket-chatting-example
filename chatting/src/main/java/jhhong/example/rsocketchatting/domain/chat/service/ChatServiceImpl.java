@@ -1,5 +1,6 @@
 package jhhong.example.rsocketchatting.domain.chat.service;
 
+import jhhong.example.rsocketchatting.domain.chat.adapter.outbound.UserAdapter;
 import jhhong.example.rsocketchatting.domain.chat.entity.Chat;
 import jhhong.example.rsocketchatting.domain.chat.entity.ChatRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,21 +13,30 @@ import reactor.core.publisher.Mono;
 public class ChatServiceImpl implements ChatService {
 
     private final ChatRepository chatRepository;
+    private final UserAdapter userAdapter;
 
     @Override
-    public Mono<Void> sendMessage(String message) {
-
-        return authenticationManager.getUserId()
-                .doOnNext(System.out::println)
-                .flatMap(userRepository::findById)
-                .switchIfEmpty(Mono.error(InvalidTokenException::new))
-                .map(user -> Chat.builder()
-                        .message(message)
-                        .senderEmail(user.getEmail())
-                        .senderName(user.getNickname())
-                        .build())
-                .flatMap(chatRepository::save)
-                .then();
+    public Flux<Chat> sendMessage(Flux<String> message) {
+        System.out.println("오 이거 어디감");
+        return message
+                .map(msg -> Chat.builder()
+                                .senderName("name")
+                                .senderEmail("email")
+                                .message(msg)
+                                .build())
+                .flatMap(chatRepository::save);
+//        return ReactiveSecurityContextHolder.getContext()
+//                .map(SecurityContext::getAuthentication)
+//                .map(Authentication::getName)
+//                .flatMap(userAdapter::getUserInfo)
+//                .doOnNext(System.out::println)
+//                .map(user -> Chat.builder()
+//                        .message(message)
+//                        .senderEmail(user.getEmail())
+//                        .senderName(user.getNickname())
+//                        .build())
+//                .flatMap(chatRepository::save)
+//                .then();
 //        return chatRepository.findById(chatRoomId)
 //                .zipWith(authenticationManager.getUserId()
 //                        .flatMap(userRepository::findById))
@@ -39,6 +49,6 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Flux<Chat> getMessage() {
-        return chatRepository.findAllBy();
+        return chatRepository.findAll();
     }
 }

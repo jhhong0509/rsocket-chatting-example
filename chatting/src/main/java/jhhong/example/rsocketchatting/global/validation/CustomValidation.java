@@ -18,7 +18,7 @@ public class CustomValidation {
                 .doOnNext(err -> validator.validate(target, err))
                 .filter(err -> !err.hasErrors())
                 .flatMap(err -> Mono.just(target))
-                .switchIfEmpty(Mono.error(BadRequestException::new));
+                .switchIfEmpty(Mono.error(new RuntimeException("Bad Request")));
     }
 
 }

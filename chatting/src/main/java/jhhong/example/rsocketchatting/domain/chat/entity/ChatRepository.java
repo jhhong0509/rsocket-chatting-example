@@ -6,6 +6,6 @@ import reactor.core.publisher.Flux;
 
 public interface ChatRepository extends ReactiveMongoRepository<Chat, String> {
 
-    @Tailable
+    @Tailable               // MongoDB는 Tailable Cursor를 Capped Collection에서만 지원한다.
     Flux<Chat> findAllBy();
 }

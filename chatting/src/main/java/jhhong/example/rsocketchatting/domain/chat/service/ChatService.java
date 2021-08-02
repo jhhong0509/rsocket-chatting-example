@@ -5,7 +5,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ChatService {
-    Mono<Void> sendMessage(String message);
+    Flux<Chat> sendMessage(Flux<String> message);
 
     Flux<Chat> getMessage();
 }
