@@ -21,6 +21,8 @@ public class Chat {
     @MongoId
     private String id;
 
+    private String chatRoomId;
+
     private String message;
 
     private String senderEmail;

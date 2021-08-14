@@ -1,7 +1,6 @@
 package jhhong.example.rsocketchatting.domain.chat.controller;
 
 import jhhong.example.rsocketchatting.domain.chat.entity.Chat;
-import jhhong.example.rsocketchatting.domain.chat.entity.ChatRepository;
 import jhhong.example.rsocketchatting.domain.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,8 +17,8 @@ public class ChatController {
     private final ChatService chatService;
 
     @MessageMapping("stream")
-    public Flux<Chat> sendMessage(@Payload Flux<String> message) {
-        return chatService.sendMessage(message);
+    public Mono<Void> sendMessage(@Payload String message) {
+
     }
 
     @MessageMapping("stream")

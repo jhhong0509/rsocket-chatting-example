@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.config.EnableReactiveMongoAuditing;
 
 @EnableReactiveMongoAuditing
 @SpringBootApplication
-@EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 public class RsocketChattingApplication {
 
     public static void main(String[] args) {
