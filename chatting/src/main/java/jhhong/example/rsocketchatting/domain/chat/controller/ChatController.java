@@ -12,15 +12,9 @@ import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
 @Controller
-@MessageMapping("api.v1.messages")
 public class ChatController {
 
     private final ChatService chatService;
-
-    @MessageMapping("join.chatroom.{roomId}")
-    public Mono<Void> joinRoom(@DestinationVariable String roomId) {
-        return chatService.joinRoom(roomId);
-    }
 
     @MessageMapping("{roomId}.send")
     public Mono<Void> sendMessage(@Payload String message, @DestinationVariable String roomId) {

@@ -1,5 +1,7 @@
 package jhhong.example.rsocketchatting.domain.chat.service;
 
+import jhhong.example.rsocketchatting.domain.chat.entity.Chat;
+import jhhong.example.rsocketchatting.domain.chat.entity.ChatRepository;
 import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
 import jhhong.example.rsocketchatting.global.objectmapper.ReactiveObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,28 +18,17 @@ import java.util.Arrays;
 @Component
 public class ChatServiceImpl implements ChatService {
 
-    private static final String JOIN_MESSAGE = "새로운 회원이 입장했습니다";
-
     private final Receiver receiver;
     private final Sender sender;
     private final ReactiveObjectMapper objectMapper;
-
-    @Override
-    public Mono<Void> joinRoom(String roomId) {
-        return sender.declareQueue(QueueSpecification.queue("test.chat." + roomId)
-                        .durable(true)
-                        .exclusive(false)
-                        .autoDelete(false))
-                .map(declareOk -> Mono.just(new OutboundMessage("", "test.chat." + roomId, JOIN_MESSAGE.getBytes())))
-                .flatMap(sender::send)
-                .then();
-    }
+    private final ChatRepository chatRepository;
 
     @Override
     public Mono<Void> sendMessage(String message, String roomId) {
         return objectMapper.encodeValue(String.class, Mono.just(message))
                 .map(buffer -> Mono.just(new OutboundMessage("", "", buffer.asByteBuffer().array())))
                 .flatMap(sender::send)
+                .flatMap(unused -> chatRepository.save(buildChat(message, roomId)))
                 .then();
     }
 
@@ -46,5 +37,14 @@ public class ChatServiceImpl implements ChatService {
         return receiver.consumeAutoAck("test.chat." + roomId)
                 .doOnNext(System.out::println)
                 .map(delivery -> new ChatResponse(Arrays.toString(delivery.getBody())));
+    }
+
+    private Chat buildChat(String message, String chatRoomId) {
+        return Chat.builder()
+                .chatRoomId(chatRoomId)
+                .message(message)
+                .senderEmail("testEmail")
+                .senderName("name")
+                .build();
     }
 }
