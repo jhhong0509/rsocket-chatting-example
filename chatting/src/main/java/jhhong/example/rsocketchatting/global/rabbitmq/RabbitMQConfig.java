@@ -1,30 +1,35 @@
 package jhhong.example.rsocketchatting.global.rabbitmq;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
+import com.rabbitmq.client.Connection;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import reactor.core.publisher.Mono;
+import reactor.rabbitmq.*;
 
 @Configuration
 public class RabbitMQConfig {
 
     @Bean
-    public Queue chatRoomQueue() {
-        return new Queue("topic.room", true);
-    }
-
-    @Bean
-    public Binding bindingTopicExchange() {
-        return BindingBuilder.bind(topicExchange())
-                .to(topicExchange())
-                .with("topic.public.*");
-    }
-
-    @Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange("chatroom-id");
+        return new TopicExchange("test.chat.exchange");
+    }
+
+    @Bean
+    public Mono<Connection> connectionMono(CachingConnectionFactory connectionFactory) {
+        return Mono.fromCallable(() -> connectionFactory
+                .getRabbitConnectionFactory().newConnection());
+    }
+
+    @Bean
+    public Sender sender(Mono<Connection> mono) {
+        return RabbitFlux.createSender(new SenderOptions().connectionMono(mono));
+    }
+
+    @Bean
+    public Receiver receiver(Mono<Connection> connectionMono) {
+        return RabbitFlux.createReceiver(new ReceiverOptions().connectionMono(connectionMono));
     }
 
 }
