@@ -4,6 +4,7 @@ import jhhong.example.rsocketchatting.domain.chat.entity.Chat;
 import jhhong.example.rsocketchatting.domain.chat.entity.ChatRepository;
 import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
 import jhhong.example.rsocketchatting.global.objectmapper.ReactiveObjectMapper;
+import jhhong.example.rsocketchatting.global.rabbitmq.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
@@ -26,7 +27,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Mono<Void> sendMessage(String message, String roomId) {
         return objectMapper.encodeValue(String.class, Mono.just(message))
-                .map(buffer -> Mono.just(new OutboundMessage("", "", buffer.asByteBuffer().array())))
+                .map(buffer -> Mono.just(new OutboundMessage(RabbitMQConfig.EXCHANGE_NAME, roomId, buffer.asByteBuffer().array())))
                 .flatMap(sender::send)
                 .flatMap(unused -> chatRepository.save(buildChat(message, roomId)))
                 .then();
