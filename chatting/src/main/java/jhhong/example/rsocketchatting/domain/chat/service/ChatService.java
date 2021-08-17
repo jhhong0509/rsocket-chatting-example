@@ -6,7 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface ChatService {
 
-
     Mono<Void> sendMessage(String message, String roomId);
 
     Flux<ChatResponse> getMessage(String roomId);

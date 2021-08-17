@@ -1,4 +1,4 @@
-package jhhong.example.rsocketchatting.global.objectmapper;
+package jhhong.example.rsocketchatting.global.jackson;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ResolvableType;

@@ -1,4 +1,4 @@
-package jhhong.example.rsocketchatting.domain.chat.adapter;
+package jhhong.example.rsocketchatting.global.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

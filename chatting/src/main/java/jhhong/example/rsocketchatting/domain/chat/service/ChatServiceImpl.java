@@ -3,15 +3,15 @@ package jhhong.example.rsocketchatting.domain.chat.service;
 import jhhong.example.rsocketchatting.domain.chat.entity.Chat;
 import jhhong.example.rsocketchatting.domain.chat.entity.ChatRepository;
 import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
-import jhhong.example.rsocketchatting.global.objectmapper.ReactiveObjectMapper;
+import jhhong.example.rsocketchatting.global.jackson.ReactiveObjectMapper;
 import jhhong.example.rsocketchatting.global.rabbitmq.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.rabbitmq.*;
+import reactor.rabbitmq.OutboundMessage;
+import reactor.rabbitmq.Receiver;
+import reactor.rabbitmq.Sender;
 
 import java.util.Arrays;
 

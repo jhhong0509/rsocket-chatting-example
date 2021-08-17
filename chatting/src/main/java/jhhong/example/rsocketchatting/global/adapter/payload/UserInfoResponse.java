@@ -1,4 +1,4 @@
-package jhhong.example.rsocketchatting.domain.chat.adapter.payload;
+package jhhong.example.rsocketchatting.global.adapter.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

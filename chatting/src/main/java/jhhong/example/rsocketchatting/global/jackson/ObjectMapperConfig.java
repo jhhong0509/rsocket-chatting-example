@@ -1,7 +1,6 @@
-package jhhong.example.rsocketchatting.global.objectmapper;
+package jhhong.example.rsocketchatting.global.jackson;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.buffer.DataBufferFactory;

@@ -1,6 +1,6 @@
-package jhhong.example.rsocketchatting.domain.chat.adapter.outbound;
+package jhhong.example.rsocketchatting.global.adapter.outbound;
 
-import jhhong.example.rsocketchatting.domain.chat.adapter.payload.UserInfoResponse;
+import jhhong.example.rsocketchatting.global.adapter.payload.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
