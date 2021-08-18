@@ -1,5 +1,8 @@
 package jhhong.example.rsocketchatting.global.requester;
 
+import io.rsocket.RSocket;
+import io.rsocket.metadata.RoutingMetadata;
+import io.rsocket.transport.netty.client.WebsocketClientTransport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.rsocket.RSocketRequester;
@@ -18,7 +21,8 @@ public class RequesterConfig {
         return builder.dataMimeType(MimeTypeUtils.APPLICATION_JSON)
                 .rsocketStrategies(strategies)
                 .rsocketConnector(rSocketConnector -> rSocketConnector.reconnect(Retry.fixedDelay(2, Duration.ofSeconds(2))))
-                .websocket(URI.create("ws://localhost:8081/rsocket"));
+                .setupRoute("create.chatroom")
+                .transport(WebsocketClientTransport.create(URI.create("ws://localhost:7000/rsocket")));
     }
 
 }
