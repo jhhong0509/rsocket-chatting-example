@@ -3,18 +3,14 @@ package jhhong.example.rsocketchatting.domain.chat.service;
 import jhhong.example.rsocketchatting.domain.chat.entity.Chat;
 import jhhong.example.rsocketchatting.domain.chat.entity.ChatRepository;
 import jhhong.example.rsocketchatting.domain.chat.payload.ChatRequest;
-import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
 import jhhong.example.rsocketchatting.global.jackson.ReactiveObjectMapper;
 import jhhong.example.rsocketchatting.global.rabbitmq.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.rabbitmq.OutboundMessage;
 import reactor.rabbitmq.Receiver;
 import reactor.rabbitmq.Sender;
-
-import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Component
@@ -32,13 +28,6 @@ public class ChatServiceImpl implements ChatService {
                 .flatMap(sender::send)
                 .flatMap(unused -> chatRepository.save(buildChat(request.getContent(), roomId)))
                 .then();
-    }
-
-    @Override
-    public Flux<ChatResponse> getMessage(String roomId) {
-        return receiver.consumeAutoAck(roomId)
-                .doOnNext(System.out::println)
-                .map(delivery -> new ChatResponse(Arrays.toString(delivery.getBody())));
     }
 
     private Chat buildChat(String message, String chatRoomId) {

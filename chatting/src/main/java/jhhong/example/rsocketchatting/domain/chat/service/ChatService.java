@@ -9,6 +9,4 @@ public interface ChatService {
 
     Mono<Void> sendMessage(ChatRequest request, String roomId);
 
-    Flux<ChatResponse> getMessage(String roomId);
-
 }

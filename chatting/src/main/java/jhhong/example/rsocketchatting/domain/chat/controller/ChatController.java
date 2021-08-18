@@ -22,9 +22,4 @@ public class ChatController {
         return chatService.sendMessage(message, roomId);
     }
 
-    @MessageMapping("{roomId}.stream")
-    public Flux<ChatResponse> getMessage(@DestinationVariable String roomId) {
-        return chatService.getMessage(roomId);
-    }
-
 }
