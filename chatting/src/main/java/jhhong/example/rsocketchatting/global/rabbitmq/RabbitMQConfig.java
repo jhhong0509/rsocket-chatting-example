@@ -11,11 +11,7 @@ import reactor.rabbitmq.*;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String EXCHANGE_NAME = "chat.room.exchage";
-    @Bean
-    public DirectExchange directExchange() {
-        return new DirectExchange(EXCHANGE_NAME, false, false);
-    }
+    public static final String EXCHANGE_NAME = "chat.room.exchange";
 
     @Bean
     public Mono<Connection> connectionMono(CachingConnectionFactory connectionFactory) {    // RabbitConnection 생성
