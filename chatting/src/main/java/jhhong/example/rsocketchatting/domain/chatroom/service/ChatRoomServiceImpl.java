@@ -1,10 +1,12 @@
 package jhhong.example.rsocketchatting.domain.chatroom.service;
 
+import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
 import jhhong.example.rsocketchatting.domain.chatroom.entity.ChatRoom;
 import jhhong.example.rsocketchatting.domain.chatroom.entity.ChatRoomRepository;
 import jhhong.example.rsocketchatting.domain.chatroom.payload.ChatRoomResponse;
 import jhhong.example.rsocketchatting.domain.chatroom.payload.CreateRoomRequest;
 import jhhong.example.rsocketchatting.global.adapter.outbound.UserAdapter;
+import jhhong.example.rsocketchatting.global.jackson.ReactiveObjectMapper;
 import jhhong.example.rsocketchatting.global.rabbitmq.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,16 +23,15 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private static final String JOIN_MESSAGE = "새로운 회원이 입장했습니다";
 
     private final Sender sender;
+    private final Receiver receiver;
     private final ChatRoomRepository chatRoomRepository;
     private final UserAdapter userAdapter;
 
     @Override
-    public Mono<Void> joinRoom(String roomId) {
-        return sender.bindQueue(BindingSpecification
-                        .queueBinding(roomId, RabbitMQConfig.EXCHANGE_NAME, roomId))
-                .map(bindOk -> Mono.just(new OutboundMessage(RabbitMQConfig.EXCHANGE_NAME, roomId, JOIN_MESSAGE.getBytes())))
-                .flatMap(sender::send)
-                .then();
+    public Flux<ChatResponse> joinRoom(String roomId) {
+        return receiver.consumeAutoAck(roomId)
+                .doOnNext(delivery -> System.out.println(new String(delivery.getBody())))
+                .map(delivery -> new ChatResponse(new String(delivery.getBody())));
     }
 
     @Override
