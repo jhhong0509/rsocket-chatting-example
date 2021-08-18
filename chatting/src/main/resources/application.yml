@@ -1,0 +1,29 @@
+jwt:
+  secret: sdfadf
+spring:
+  data:
+    mongodb:
+      password: hong
+      username: hong
+      authentication-database: ${MONGO_DB_AUTH}
+      auto-index-creation: true
+      database: ${MONGO_DATABASE}
+      host: ${MONGO_DB_URL}
+      port: ${MONGO_DB_PORT}
+  rsocket:
+    server:
+      port: 7000
+      mapping-path: /rsocket
+      transport: websocket
+  security:
+    user:
+      name: test
+  rabbitmq:
+    port: 5672
+    host: localhost
+
+server:
+  port: 8082
+logging:
+  level:
+    org.springframework.data.mongodb.repository.query: DEBUG
