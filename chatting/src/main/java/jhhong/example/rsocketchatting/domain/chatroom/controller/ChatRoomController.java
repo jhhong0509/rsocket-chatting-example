@@ -1,5 +1,6 @@
 package jhhong.example.rsocketchatting.domain.chatroom.controller;
 
+import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
 import jhhong.example.rsocketchatting.domain.chatroom.payload.ChatRoomResponse;
 import jhhong.example.rsocketchatting.domain.chatroom.payload.CreateRoomRequest;
 import jhhong.example.rsocketchatting.domain.chatroom.service.ChatRoomService;
@@ -18,7 +19,7 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     @MessageMapping("join.chatroom.{roomId}")
-    public Mono<Void> joinRoom(@DestinationVariable String roomId) {
+    public Flux<ChatResponse> joinRoom(@DestinationVariable String roomId) {
         return chatRoomService.joinRoom(roomId);
     }
 
@@ -29,7 +30,6 @@ public class ChatRoomController {
 
     @MessageMapping("chatroom")
     public Flux<ChatRoomResponse> getChatRoom() {
-        System.out.println("ㅏㅏㅏㅏㅏㅏㅏ");
         return chatRoomService.getChatRoom();
     }
 }
