@@ -1,5 +1,6 @@
 package jhhong.example.rsocketchatting.domain.chat.controller;
 
+import jhhong.example.rsocketchatting.domain.chat.payload.ChatRequest;
 import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
 import jhhong.example.rsocketchatting.domain.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class ChatController {
     private final ChatService chatService;
 
     @MessageMapping("{roomId}.send")
-    public Mono<Void> sendMessage(@Payload String message, @DestinationVariable String roomId) {
+    public Mono<Void> sendMessage(@Payload ChatRequest message, @DestinationVariable String roomId) {
         return chatService.sendMessage(message, roomId);
     }
 
