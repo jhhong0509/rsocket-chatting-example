@@ -2,6 +2,7 @@ package jhhong.example.rsocketchatting.domain.chat.service;
 
 import jhhong.example.rsocketchatting.domain.chat.entity.Chat;
 import jhhong.example.rsocketchatting.domain.chat.entity.ChatRepository;
+import jhhong.example.rsocketchatting.domain.chat.payload.ChatRequest;
 import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
 import jhhong.example.rsocketchatting.global.jackson.ReactiveObjectMapper;
 import jhhong.example.rsocketchatting.global.rabbitmq.RabbitMQConfig;
@@ -25,17 +26,17 @@ public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
 
     @Override
-    public Mono<Void> sendMessage(String message, String roomId) {
-        return objectMapper.encodeValue(String.class, Mono.just(message))
+    public Mono<Void> sendMessage(ChatRequest request, String roomId) {
+        return objectMapper.encodeValue(ChatRequest.class, Mono.just(request))
                 .map(buffer -> Mono.just(new OutboundMessage(RabbitMQConfig.EXCHANGE_NAME, roomId, buffer.asByteBuffer().array())))
                 .flatMap(sender::send)
-                .flatMap(unused -> chatRepository.save(buildChat(message, roomId)))
+                .flatMap(unused -> chatRepository.save(buildChat(request.getContent(), roomId)))
                 .then();
     }
 
     @Override
     public Flux<ChatResponse> getMessage(String roomId) {
-        return receiver.consumeAutoAck("test.chat." + roomId)
+        return receiver.consumeAutoAck(roomId)
                 .doOnNext(System.out::println)
                 .map(delivery -> new ChatResponse(Arrays.toString(delivery.getBody())));
     }
