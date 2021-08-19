@@ -8,5 +8,9 @@ spring:
       host: ${MONGO_DB_URL}
       auto-index-creation: true
       authentication-database: admin
+      database: ${MONGO_DATABASE}
       username: ${MONGO_DB_USERNAME}
       password: ${MONGO_DB_PASSWORD}
+
+server:
+  port: 8030

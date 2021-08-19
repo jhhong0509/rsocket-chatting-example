@@ -5,7 +5,7 @@ spring:
     mongodb:
       password: ${MONGO_DB_PASSWORD}
       username: ${MONGO_DB_USERNAME}
-      authentication-database: ${MONGO_DB_AUTH}
+      authentication-database: admin
       auto-index-creation: true
       database: ${MONGO_DATABASE}
       host: ${MONGO_DB_URL}
@@ -23,7 +23,7 @@ spring:
     host: localhost
 
 server:
-  port: 8082
+  port: 8031
 logging:
   level:
     org.springframework.data.mongodb.repository.query: DEBUG

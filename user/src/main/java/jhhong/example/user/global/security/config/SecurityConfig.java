@@ -18,9 +18,6 @@ public class SecurityConfig {
 
     private final AuthenticationFilter authenticationFilter;
 
-    @Value("${jwt.secret}")
-    private String secret;
-
     @Bean
     protected SecurityWebFilterChain filterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity

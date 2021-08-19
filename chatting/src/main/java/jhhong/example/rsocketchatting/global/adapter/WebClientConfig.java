@@ -12,7 +12,7 @@ public class WebClientConfig {
     @Bean
     WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("localhost:8080")
+                .baseUrl("chattest-user")
                 .build();
     }
 }

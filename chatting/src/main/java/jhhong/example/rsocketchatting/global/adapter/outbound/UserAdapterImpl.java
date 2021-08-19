@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 public class UserAdapterImpl implements UserAdapter {
 
     private final WebClient webClient;
-    private static final String GET_USER_URI = "localhost:8080/user/{userEmail}";
+    private static final String GET_USER_URI = "chat-user-backend:8080/user/{userEmail}";
 
     @Override
     public Mono<UserInfoResponse> getUserInfo(String userEmail) {
