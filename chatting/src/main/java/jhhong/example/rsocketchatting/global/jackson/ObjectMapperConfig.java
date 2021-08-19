@@ -20,6 +20,7 @@ public class ObjectMapperConfig {
     public Jackson2JsonEncoder jackson2JsonEncoder() {
         return new Jackson2JsonEncoder();
     }
+
     @Bean
     public Jackson2JsonDecoder jackson2JsonDecoder() {
         return new Jackson2JsonDecoder();

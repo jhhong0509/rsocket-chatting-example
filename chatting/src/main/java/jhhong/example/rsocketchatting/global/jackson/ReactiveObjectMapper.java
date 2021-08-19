@@ -27,13 +27,4 @@ public class ReactiveObjectMapper {
         return null;
     }
 
-    public Mono<?> decodeValue(Class<?> target, Flux<DataBuffer> dataBufferFlux) {
-        ResolvableType type = ResolvableType.forType(target);
-        if(jsonDecoder.canDecode(type, null)) {
-            return jsonDecoder.decodeToMono(dataBufferFlux, type,
-                    null, null);
-        }
-        return null;
-    }
-
 }
