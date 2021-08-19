@@ -45,15 +45,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                                 .type("fanout"))
                         .then(Mono.just(chatRoom)))
                 .flatMap(chatRoom -> sender.bindExchange(BindingSpecification
-                        .binding()
-                        .routingKey(chatRoom.getId())
-                        .exchangeTo(chatRoom.getId())
-                        .exchangeFrom(RabbitMQConfig.EXCHANGE_NAME))
+                                .binding()
+                                .routingKey(chatRoom.getId())
+                                .exchangeTo(chatRoom.getId())
+                                .exchangeFrom(RabbitMQConfig.EXCHANGE_NAME))
                         .then(Mono.just(chatRoom)))
                 .flatMap(chatRoom -> join(chatRoom.getId()))
                 .then();
     }
-
 
     @Override
     public Flux<ChatRoomResponse> getChatRoom() {

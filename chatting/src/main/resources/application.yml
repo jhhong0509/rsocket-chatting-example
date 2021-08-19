@@ -1,5 +1,5 @@
 jwt:
-  secret: sdfadf
+  secret: testtesttesttesttesttesttesttest
 spring:
   data:
     mongodb:

@@ -32,4 +32,5 @@ public class ChatRoomController {
     public Flux<ChatRoomResponse> getChatRoom() {
         return chatRoomService.getChatRoom();
     }
+
 }
