@@ -1,7 +1,10 @@
 package jhhong.example.rsocketchatting.global.security.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
@@ -12,6 +15,8 @@ import org.springframework.security.oauth2.server.resource.authentication.Reacti
 
 import javax.crypto.spec.SecretKeySpec;
 
+@RequiredArgsConstructor
+@Configuration
 public class JwtConfiguration {
 
     @Value("${jwt.secret}")

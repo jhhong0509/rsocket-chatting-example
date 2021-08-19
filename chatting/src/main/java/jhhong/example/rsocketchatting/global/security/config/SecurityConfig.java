@@ -26,14 +26,6 @@ public class SecurityConfig {
     private final JwtReactiveAuthenticationManager jwtReactiveAuthenticationManager;
 
     @Bean
-    public RSocketMessageHandler messageHandler(RSocketStrategies strategies) {
-        RSocketMessageHandler handler = new RSocketMessageHandler();
-        handler.getArgumentResolverConfigurer().addCustomResolver(new AuthenticationPrincipalArgumentResolver());
-        handler.setRSocketStrategies(strategies);
-        return handler;
-    }
-
-    @Bean
     PayloadSocketAcceptorInterceptor authorization(RSocketSecurity security) {      // Jwt를 인증하고 권한을 결정한다.
         return security.authorizePayload(authorize ->
                         authorize
