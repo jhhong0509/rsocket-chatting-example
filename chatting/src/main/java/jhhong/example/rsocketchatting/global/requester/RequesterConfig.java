@@ -20,8 +20,7 @@ public class RequesterConfig {
     RSocketRequester requester(RSocketRequester.Builder builder, RSocketStrategies strategies) {
         return builder.dataMimeType(MimeTypeUtils.APPLICATION_JSON)
                 .rsocketStrategies(strategies)
-                .rsocketConnector(rSocketConnector -> rSocketConnector.reconnect(Retry.fixedDelay(2, Duration.ofSeconds(2))))
-                .setupRoute("create.chatroom")
+                .rsocketConnector(rSocketConnector -> rSocketConnector.reconnect(Retry.fixedDelay(3, Duration.ofSeconds(2))))
                 .transport(WebsocketClientTransport.create(URI.create("ws://localhost:7000/rsocket")));
     }
 

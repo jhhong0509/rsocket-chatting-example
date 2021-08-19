@@ -1,6 +1,5 @@
 package jhhong.example.rsocketchatting.global.security.config;
 
-import io.rsocket.resume.ServerRSocketSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +22,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.oauth2.server.resource.authentication.JwtReactiveAuthenticationManager;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.rsocket.core.PayloadSocketAcceptorInterceptor;
+import org.springframework.security.messaging.handler.invocation.reactive.AuthenticationPrincipalArgumentResolver;
 import org.springframework.security.rsocket.metadata.SimpleAuthenticationEncoder;
-import org.springframework.security.web.reactive.result.method.annotation.AuthenticationPrincipalArgumentResolver;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -36,15 +35,25 @@ public class SecurityConfig {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Bean // (4)
+    public RSocketMessageHandler messageHandler(RSocketStrategies strategies) {
+
+        RSocketMessageHandler handler = new RSocketMessageHandler();
+        handler.getArgumentResolverConfigurer().addCustomResolver(new AuthenticationPrincipalArgumentResolver());
+        handler.setRSocketStrategies(strategies);
+        return handler;
+    }
+
     @Bean
     PayloadSocketAcceptorInterceptor authorization(RSocketSecurity security) {      // Jwt를 인증하고 권한을 결정한다.
         return security.authorizePayload(authorize ->
                         authorize
-                                .anyExchange().permitAll())
+                                .setup().permitAll()
+                                .anyExchange().authenticated())
                 .jwt(jwt -> {
-                        try {
-                            jwt.authenticationManager(jwtReactiveAuthenticationManager(reactiveJwtDecoder()));
-                        } catch (Exception e) {
+                    try {
+                        jwt.authenticationManager(jwtReactiveAuthenticationManager(reactiveJwtDecoder()));
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }).build();
