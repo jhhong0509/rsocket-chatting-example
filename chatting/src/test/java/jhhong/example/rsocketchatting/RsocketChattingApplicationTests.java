@@ -6,15 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.rsocket.metadata.WellKnownMimeType;
 import jhhong.example.rsocketchatting.domain.chat.payload.ChatResponse;
-import jhhong.example.rsocketchatting.domain.chatroom.payload.ChatRoomResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import reactor.rabbitmq.Receiver;
+
+import java.util.concurrent.CountDownLatch;
 
 @SpringBootTest
 class RsocketChattingApplicationTests {
@@ -25,18 +25,21 @@ class RsocketChattingApplicationTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private Receiver receiver;
+
     @Test
-    void requestTest() {
+    void requestTest() throws InterruptedException {
 
         MimeType authenticationMimeType =
                 MimeTypeUtils.parseMimeType(WellKnownMimeType.MESSAGE_RSOCKET_AUTHENTICATION.getString());
         String token = JWT.create()
                 .withSubject("test@dsm.hs.kr")
                 .sign(Algorithm.HMAC256("test"));
+        CountDownLatch countDownLatch = new CountDownLatch(1);
 
 
         // createChatroom
-        System.out.println("createChatRoom");
         ObjectNode node = objectMapper.createObjectNode();
 
 //        requester
@@ -55,12 +58,20 @@ class RsocketChattingApplicationTests {
 //                .doOnNext(System.out::println);
 
 
+        requester
+                .route("join.chatroom." + "611ca8e607dcc54031a4862d")
+                .retrieveFlux(ChatResponse.class)
+                .doOnComplete(() -> System.out.println("끝났다고??"))
+                .doOnError(throwable -> System.out.println("에러???"))
+                .log()
+                .subscribe();
+
         requester.route("611ca8e607dcc54031a4862d.send")
                 .metadata(token, authenticationMimeType)
                 .data(objectMapper.createObjectNode().put("content", "test"))
                 .send()
                 .block();
-        System.out.println("send");
+
 //        responseFlux
 //                .flatMap(res -> Mono.just(requester.route(res.getChatRoomId() + ".send")))
 //                .flatMap(requestSpec -> requestSpec
