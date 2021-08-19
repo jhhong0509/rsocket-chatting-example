@@ -3,8 +3,8 @@ jwt:
 spring:
   data:
     mongodb:
-      password: hong
-      username: hong
+      password: ${MONGO_DB_PASSWORD}
+      username: ${MONGO_DB_USERNAME}
       authentication-database: ${MONGO_DB_AUTH}
       auto-index-creation: true
       database: ${MONGO_DATABASE}
