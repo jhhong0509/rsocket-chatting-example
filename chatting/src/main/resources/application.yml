@@ -3,16 +3,16 @@ jwt:
 spring:
   data:
     mongodb:
-      password: hong
-      username: hong
+      password: ${MONGO_DB_PASSWORD}
+      username: ${MONGO_DB_USERNAME}
       authentication-database: admin
       auto-index-creation: true
-      database: chattest
-      host: 211.38.86.92
-      port: 27017
+      database: ${MONGO_DATABASE}
+      host: ${MONGO_DB_URL}
+      port: ${MONGO_DB_PORT}
   rsocket:
     server:
-      port: 7001
+      port: 7000
       mapping-path: /rsocket
       transport: websocket
   security:
