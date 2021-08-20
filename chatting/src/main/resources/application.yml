@@ -12,7 +12,7 @@ spring:
       port: ${MONGO_DB_PORT}
   rsocket:
     server:
-      port: 7000
+      port: 7001
       mapping-path: /rsocket
       transport: websocket
   security:
