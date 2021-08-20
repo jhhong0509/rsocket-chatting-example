@@ -5,10 +5,9 @@ services:
     networks:
       - testchat
     image: testchat-user
-    working_dir: ./user
     build:
       context: .
-      dockerfile: './Dockerfile'
+      dockerfile: './user/Dockerfile'
     ports:
       - "8030:8030"
     container_name: chat-user-backend
@@ -22,10 +21,9 @@ services:
     networks:
       - testchat
     image: testchat-chat
-    working_dir: ./chatting
     build:
       context: .
-      dockerfile: './Dockerfile'
+      dockerfile: './chatting/Dockerfile'
     ports:
       - "8030:8030"
     container_name: chat-backend
