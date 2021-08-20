@@ -6,6 +6,7 @@ services:
       - testchat
     image: testchat-user
     build:
+      context: .
       dockerfile: './user/Dockerfile'
     ports:
       - "8030:8030"
@@ -21,6 +22,7 @@ services:
       - testchat
     image: testchat-chat
     build:
+      context: .
       dockerfile: './chatting/Dockerfile'
     ports:
       - "8030:8030"
