@@ -1,3 +1,3 @@
 FROM openjdk:11-jre-slim
-COPY COPY /home/hong/projects/rsocket-chatting-example/user/build/libs/*.jar app.jar
+COPY /home/hong/projects/rsocket-chatting-example/user/build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
