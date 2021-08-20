@@ -5,6 +5,8 @@ services:
     networks:
       - testchat
     image: testchat-user
+    command:
+      -
     build:
       context: .
       dockerfile: './user/Dockerfile'
