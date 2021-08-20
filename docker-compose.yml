@@ -5,6 +5,7 @@ services:
     networks:
       - testchat
     image: testchat-user
+    working_dir: ./user
     build:
       context: .
       dockerfile: './user/Dockerfile'
@@ -21,6 +22,7 @@ services:
     networks:
       - testchat
     image: testchat-chat
+    working_dir: ./chatting
     build:
       context: .
       dockerfile: './chatting/Dockerfile'
