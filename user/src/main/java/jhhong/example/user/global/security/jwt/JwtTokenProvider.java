@@ -22,7 +22,7 @@ public class JwtTokenProvider {
     public String generateToken(String id, TokenType type) {
         return Jwts.builder()
                 .setSubject(id)
-                .signWith(SignatureAlgorithm.HS512, Base64.getEncoder().encodeToString(secret.getBytes()))
+                .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secret.getBytes()))
                 .setExpiration(new Date(System.currentTimeMillis() + type.getExp()))
                 .setIssuedAt(new Date())
                 .claim("type", type.getType())
