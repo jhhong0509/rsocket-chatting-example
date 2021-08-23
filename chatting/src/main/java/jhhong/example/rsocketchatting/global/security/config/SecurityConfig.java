@@ -2,27 +2,30 @@ package jhhong.example.rsocketchatting.global.security.config;
 
 import jhhong.example.rsocketchatting.global.adapter.outbound.UserAdapter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.context.expression.BeanFactoryResolver;
+import org.springframework.messaging.handler.invocation.reactive.ArgumentResolverConfigurer;
+import org.springframework.messaging.rsocket.RSocketStrategies;
+import org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.rsocket.EnableRSocketSecurity;
 import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.messaging.handler.invocation.reactive.AuthenticationPrincipalArgumentResolver;
+import org.springframework.security.messaging.handler.invocation.reactive.CurrentSecurityContextArgumentResolver;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtReactiveAuthenticationManager;
-import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.rsocket.authentication.BearerPayloadExchangeConverter;
 import org.springframework.security.rsocket.authentication.PayloadExchangeAuthenticationConverter;
 import org.springframework.security.rsocket.core.PayloadSocketAcceptorInterceptor;
-import reactor.core.Disposables;
+import org.springframework.web.util.pattern.PathPatternRouteMatcher;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -37,6 +40,7 @@ public class SecurityConfig {
     @Value("${jwt.secret}")
     private String secret;
 
+
     @Bean
     public PayloadExchangeAuthenticationConverter authenticationConverter() {
         return new BearerPayloadExchangeConverter();
@@ -50,7 +54,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    public JwtReactiveAuthenticationManager jwtReactiveAuthenticationManager() {
+    public ReactiveAuthenticationManager jwtReactiveAuthenticationManager() {
         return new JwtReactiveAuthenticationManager(reactiveJwtDecoder());
     }
 
@@ -65,14 +69,25 @@ public class SecurityConfig {
     }
 
     @Bean
-    public ReactiveUserDetailsService reactiveUserDetailsService() {
-        return username -> userAdapter.getUserInfo(username)
-                .map(AuthDetails::new);
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    RSocketMessageHandler messageHandler(RSocketStrategies rSocketStrategies, BeanFactory beanFactory) {
+        BeanFactoryResolver resolver = new BeanFactoryResolver(beanFactory);
+        AuthenticationPrincipalArgumentResolver principal = new AuthenticationPrincipalArgumentResolver();
+        principal.setBeanResolver(resolver);
+        CurrentSecurityContextArgumentResolver context = new CurrentSecurityContextArgumentResolver();
+        context.setBeanResolver(resolver);
+        RSocketMessageHandler messageHandler = new RSocketMessageHandler();
+        messageHandler.setRSocketStrategies(rSocketStrategies);
+        messageHandler.setRouteMatcher(new PathPatternRouteMatcher());
+        ArgumentResolverConfigurer args = messageHandler
+                .getArgumentResolverConfigurer();
+        args.addCustomResolver(principal);
+        args.addCustomResolver(context);
+        return messageHandler;
     }
 
 }
