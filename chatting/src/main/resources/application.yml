@@ -20,7 +20,7 @@ spring:
       name: test
   rabbitmq:
     port: 5672
-    host: rabbitmq
+    host: localhost
 
 server:
   port: 8031

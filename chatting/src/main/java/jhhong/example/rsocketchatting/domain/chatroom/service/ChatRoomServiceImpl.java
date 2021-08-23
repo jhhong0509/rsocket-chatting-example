@@ -8,6 +8,10 @@ import jhhong.example.rsocketchatting.domain.chatroom.payload.CreateRoomRequest;
 import jhhong.example.rsocketchatting.global.adapter.outbound.UserAdapter;
 import jhhong.example.rsocketchatting.global.rabbitmq.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,13 +29,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     private final UserAdapter userAdapter;
 
     @Override
-    public Flux<ChatResponse> joinRoom(String roomId) {
-        return join(roomId)
-                .thenMany(getMessageFromQueue(roomId));
+    public Flux<ChatResponse> joinRoom(String roomId, String email) {
+        return join(roomId, email)
+                .thenMany(getMessageFromQueue(roomId, email));
     }
 
     @Override
-    public Mono<Void> createRoom(CreateRoomRequest request) {
+    public Mono<Void> createRoom(CreateRoomRequest request, String email) {
         return chatRoomRepository.save(ChatRoom.builder()
                         .members(List.of("test"))
                         .roomName(request.getRoomName())
@@ -50,7 +54,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
                                 .exchangeTo(chatRoom.getId())
                                 .exchangeFrom(RabbitMQConfig.EXCHANGE_NAME))
                         .then(Mono.just(chatRoom)))
-                .flatMap(chatRoom -> join(chatRoom.getId()))
+                .flatMap(chatRoom -> join(chatRoom.getId(), email))
                 .then();
     }
 
@@ -59,19 +63,19 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         return null;
     }
 
-    private Mono<Void> join(String roomId) {
+    private Mono<Void> join(String roomId, String email) {
         return sender
-                .declareQueue(QueueSpecification.queue(roomId + "." + "test")
+                .declareQueue(QueueSpecification.queue(roomId + "." + email)
                         .autoDelete(false))
                 .flatMap(declareOk -> sender.bindQueue(BindingSpecification.binding()
                         .routingKey(roomId)
-                        .queue(roomId + "." + "test")    // TODO: 2021-08-19 UserId를 받아와서 처리
+                        .queue(roomId + "." + email)
                         .exchangeFrom(roomId)))
                 .then();
     }
 
-    private Flux<ChatResponse> getMessageFromQueue(String roomId) {
-        return receiver.consumeAutoAck(roomId + "." + "test")   // TODO: 2021-08-19 UserId 받아와서 처리
+    private Flux<ChatResponse> getMessageFromQueue(String roomId, String email) {
+        return receiver.consumeAutoAck(roomId + "." + email)
                 .map(delivery -> new ChatResponse(new String(delivery.getBody())));
     }
 

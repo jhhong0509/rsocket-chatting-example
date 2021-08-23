@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ChatRoomService {
-    Flux<ChatResponse> joinRoom(String roomId);
-    Mono<Void> createRoom(CreateRoomRequest request);
+    Flux<ChatResponse> joinRoom(String roomId, String email);
+    Mono<Void> createRoom(CreateRoomRequest request, String email);
     Flux<ChatRoomResponse> getChatRoom();
 }
